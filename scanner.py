@@ -3,10 +3,26 @@ import numpy as np
 import rect
 import matplotlib.pyplot as plt
 
+def rectify(h):
+    h = h.reshape((4,2))
+    print h
+    hnew = np.zeros((4,2),dtype = np.float32)
+
+    add = h.sum(1)
+    print add
+    hnew[0] = h[np.argmin(add)]
+    hnew[2] = h[np.argmax(add)]
+
+    diff = np.diff(h,axis = 1)
+    hnew[1] = h[np.argmin(diff)]
+    hnew[3] = h[np.argmax(diff)]
+
+    return hnew
+
 # add image here.
 # We can also use laptop's webcam if the resolution is good enough to capture
 # readable document content
-image = cv2.imread('/home/ayush/Desktop/projects/coding-blocks/test/document-scanner/images/receipt.jpg')
+image = cv2.imread('./images/receipt.jpg')
 
 # resize image so it can be processed
 # choose optimal dimensions such that important content is not lost
